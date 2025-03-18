@@ -6,7 +6,7 @@ import "time"
 type Order struct {
 	id           int
 	userId       int
-	statusId     int8
+	status       OrderStatus
 	cost         float32
 	productCount int
 	created      string
@@ -18,7 +18,7 @@ type Order struct {
 func NewOrder(userId int, cost float32, productCount int, email string, address string, phone string) Order {
 	return Order{
 		userId:       userId,
-		statusId:     1, //draft
+		status:       New,
 		cost:         cost,
 		productCount: productCount,
 		created:      time.Now().GoString(),
@@ -28,12 +28,12 @@ func NewOrder(userId int, cost float32, productCount int, email string, address 
 	}
 }
 
-func (o *Order) SetStatus(orderStatusId int8) {
-	o.statusId = orderStatusId
+func (o *Order) SetStatus(orderStatus OrderStatus) {
+	o.status = orderStatus
 }
 
-func (o *Order) GetStatus() int8 {
-	return o.statusId
+func (o *Order) GetStatus() OrderStatus {
+	return o.status
 }
 
 func (o *Order) SetEmail(email string) {

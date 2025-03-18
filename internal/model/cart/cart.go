@@ -4,26 +4,26 @@ import "time"
 
 //Cart for creating order
 type Cart struct {
-	id       int
-	userId   int
-	orderId  int
-	statusId int8
-	created  string
+	id      int
+	userId  int
+	orderId int
+	status  CartStatus
+	created string
 }
 
 func NewCart(userId int, orderId int) Cart {
 	return Cart{
-		userId:   userId,
-		orderId:  orderId,
-		statusId: 1,
-		created:  time.Now().GoString(),
+		userId:  userId,
+		orderId: orderId,
+		status:  Empty,
+		created: time.Now().GoString(),
 	}
 }
 
-func (c *Cart) SetStatus(cartStatusId int8) {
-	c.statusId = cartStatusId
+func (c *Cart) SetStatus(cartStatus CartStatus) {
+	c.status = cartStatus
 }
 
-func (c *Cart) GetStatus() int8 {
-	return c.statusId
+func (c *Cart) GetStatus() CartStatus {
+	return c.status
 }
