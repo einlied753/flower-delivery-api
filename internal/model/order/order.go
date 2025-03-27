@@ -1,8 +1,13 @@
 package order
 
-import "time"
+import (
+	"api/internal/model"
+	"fmt"
+	"strconv"
+	"time"
+)
 
-//Order created by user after selecting products
+// Order created by user after selecting products
 type Order struct {
 	id           int
 	userId       int
@@ -15,8 +20,9 @@ type Order struct {
 	phone        string
 }
 
-func NewOrder(userId int, cost float32, productCount int, email string, address string, phone string) Order {
+func NewOrder(userId int, cost float32, productCount int, email string, address string, phone string) model.Item {
 	return Order{
+		id:           1,
 		userId:       userId,
 		status:       New,
 		cost:         cost,
@@ -50,4 +56,9 @@ func (o *Order) SetAddress(address string) {
 
 func (o *Order) GetAddress() string {
 	return o.address
+}
+
+func (o Order) SaveItem() {
+	time.Sleep(time.Second)
+	fmt.Println("The Order " + strconv.Itoa(o.id) + " was saved")
 }

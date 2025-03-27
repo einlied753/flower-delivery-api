@@ -1,8 +1,13 @@
 package cart
 
-import "time"
+import (
+	"api/internal/model"
+	"fmt"
+	"strconv"
+	"time"
+)
 
-//Cart for creating order
+// Cart for creating order
 type Cart struct {
 	id      int
 	userId  int
@@ -11,8 +16,9 @@ type Cart struct {
 	created string
 }
 
-func NewCart(userId int, orderId int) Cart {
+func NewCart(userId int, orderId int) model.Item {
 	return Cart{
+		id:      1,
 		userId:  userId,
 		orderId: orderId,
 		status:  Empty,
@@ -26,4 +32,9 @@ func (c *Cart) SetStatus(cartStatus CartStatus) {
 
 func (c *Cart) GetStatus() CartStatus {
 	return c.status
+}
+
+func (c Cart) SaveItem() {
+	time.Sleep(time.Second)
+	fmt.Println("The Cart " + strconv.Itoa(c.id) + " was saved")
 }

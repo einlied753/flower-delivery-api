@@ -1,6 +1,13 @@
 package order
 
-//Link between orders and products, contains products added to order
+import (
+	"api/internal/model"
+	"fmt"
+	"strconv"
+	"time"
+)
+
+// Link between orders and products, contains products added to order
 type OrderProduct struct {
 	id           int
 	orderId      int
@@ -8,8 +15,9 @@ type OrderProduct struct {
 	productCount int
 }
 
-func NewOrderProduct(orderId int, productId int, productCount int) OrderProduct {
+func NewOrderProduct(orderId int, productId int, productCount int) model.Item {
 	return OrderProduct{
+		id:           1,
 		orderId:      orderId,
 		productId:    productId,
 		productCount: productCount,
@@ -30,4 +38,9 @@ func (op *OrderProduct) SetProductCount(productCount int) {
 
 func (op *OrderProduct) GetProductCount() int {
 	return op.productCount
+}
+
+func (op OrderProduct) SaveItem() {
+	time.Sleep(time.Second)
+	fmt.Println("The OrderProduct " + strconv.Itoa(op.id) + " was saved")
 }
