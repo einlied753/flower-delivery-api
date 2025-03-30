@@ -1,7 +1,6 @@
 package product
 
 import (
-	"api/internal/model"
 	"fmt"
 	"time"
 )
@@ -15,7 +14,7 @@ type Product struct {
 	discount float32
 }
 
-func NewProduct(id int, name string, price float32, quantity int, discount float32) model.Item {
+func NewProduct(id int, name string, price float32, quantity int, discount float32) Product {
 	return Product{
 		id:       id,
 		name:     name,

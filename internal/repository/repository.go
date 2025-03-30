@@ -1,7 +1,6 @@
 package repository
 
 import (
-	"api/internal/model"
 	"api/internal/model/cart"
 	"api/internal/model/order"
 	"api/internal/model/product"
@@ -11,34 +10,38 @@ import (
 )
 
 var (
-	userSlice         = []user.User{}
-	productSlice      = []product.Product{}
-	orderSlice        = []order.Order{}
-	orderProductSlice = []order.OrderProduct{}
-	cartSlice         = []cart.Cart{}
-	cartProductSlice  = []cart.CartProduct{}
+	userSlice         []*user.User
+	productSlice      []*product.Product
+	orderSlice        []*order.Order
+	orderProductSlice []*order.OrderProduct
+	cartSlice         []*cart.Cart
+	cartProductSlice  []*cart.CartProduct
 )
 
-func SetItems(items []model.Item) {
+type Item interface {
+	SaveItem()
+}
+
+func SetItems(items []Item) {
 	for _, item := range items {
 		switch v := item.(type) {
 		case user.User:
-			userSlice = append(userSlice, v)
+			userSlice = append(userSlice, &v)
 			item.SaveItem()
 		case product.Product:
-			productSlice = append(productSlice, v)
+			productSlice = append(productSlice, &v)
 			item.SaveItem()
 		case cart.Cart:
-			cartSlice = append(cartSlice, v)
+			cartSlice = append(cartSlice, &v)
 			item.SaveItem()
 		case cart.CartProduct:
-			cartProductSlice = append(cartProductSlice, v)
+			cartProductSlice = append(cartProductSlice, &v)
 			item.SaveItem()
 		case order.Order:
-			orderSlice = append(orderSlice, v)
+			orderSlice = append(orderSlice, &v)
 			item.SaveItem()
 		case order.OrderProduct:
-			orderProductSlice = append(orderProductSlice, v)
+			orderProductSlice = append(orderProductSlice, &v)
 			item.SaveItem()
 		default:
 			fmt.Println("Error in repository.GetItems: undefined type of item")

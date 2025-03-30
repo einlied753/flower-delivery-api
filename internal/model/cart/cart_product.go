@@ -1,7 +1,6 @@
 package cart
 
 import (
-	"api/internal/model"
 	"fmt"
 	"strconv"
 	"time"
@@ -15,7 +14,7 @@ type CartProduct struct {
 	productCount int
 }
 
-func NewCartProduct(id int, cartId int, productId int, productCount int) model.Item {
+func NewCartProduct(id int, cartId int, productId int, productCount int) CartProduct {
 	return CartProduct{
 		id:           id,
 		cartId:       cartId,

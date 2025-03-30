@@ -1,7 +1,6 @@
 package user
 
 import (
-	"api/internal/model"
 	"fmt"
 	"time"
 )
@@ -16,7 +15,7 @@ type User struct {
 	isActive bool
 }
 
-func NewUser(fio string, email string, phone string, address string) model.Item {
+func NewUser(fio string, email string, phone string, address string) User {
 	return User{
 		id:       1,
 		fio:      fio,

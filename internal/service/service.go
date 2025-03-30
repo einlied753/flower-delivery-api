@@ -1,7 +1,6 @@
 package service
 
 import (
-	"api/internal/model"
 	"api/internal/model/cart"
 	"api/internal/model/order"
 	"api/internal/model/product"
@@ -13,7 +12,7 @@ import (
 func Creator() {
 
 	time.Sleep(time.Second)
-	var newSlice = []model.Item{}
+	newSlice := []repository.Item{}
 
 	newUser := user.NewUser("Annette Johnson", "ann@mail.com", "+34563456345", "34, Leroy str., 153")
 	newSlice = append(newSlice, newUser)

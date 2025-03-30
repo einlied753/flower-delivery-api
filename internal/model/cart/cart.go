@@ -1,7 +1,6 @@
 package cart
 
 import (
-	"api/internal/model"
 	"fmt"
 	"strconv"
 	"time"
@@ -16,7 +15,7 @@ type Cart struct {
 	created string
 }
 
-func NewCart(userId int, orderId int) model.Item {
+func NewCart(userId int, orderId int) Cart {
 	return Cart{
 		id:      1,
 		userId:  userId,

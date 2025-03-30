@@ -1,7 +1,6 @@
 package order
 
 import (
-	"api/internal/model"
 	"fmt"
 	"strconv"
 	"time"
@@ -15,7 +14,7 @@ type OrderProduct struct {
 	productCount int
 }
 
-func NewOrderProduct(orderId int, productId int, productCount int) model.Item {
+func NewOrderProduct(orderId int, productId int, productCount int) OrderProduct {
 	return OrderProduct{
 		id:           1,
 		orderId:      orderId,
