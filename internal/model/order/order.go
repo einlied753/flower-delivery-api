@@ -19,8 +19,8 @@ type Order struct {
 	phone        string
 }
 
-func NewOrder(userId int, cost float32, productCount int, email string, address string, phone string) Order {
-	return Order{
+func NewOrder(userId int, cost float32, productCount int, email string, address string, phone string) *Order {
+	return &Order{
 		id:           1,
 		userId:       userId,
 		status:       New,
@@ -57,7 +57,7 @@ func (o *Order) GetAddress() string {
 	return o.address
 }
 
-func (o Order) SaveItem() {
+func (o *Order) SaveItem() {
 	time.Sleep(time.Second)
 	fmt.Println("The Order " + strconv.Itoa(o.id) + " was saved")
 }

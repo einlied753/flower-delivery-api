@@ -14,8 +14,8 @@ type Product struct {
 	discount float32
 }
 
-func NewProduct(id int, name string, price float32, quantity int, discount float32) Product {
-	return Product{
+func NewProduct(id int, name string, price float32, quantity int, discount float32) *Product {
+	return &Product{
 		id:       id,
 		name:     name,
 		price:    price,
@@ -40,7 +40,7 @@ func (p *Product) GetQuantity() int {
 	return p.quantity
 }
 
-func (p Product) SaveItem() {
+func (p *Product) SaveItem() {
 	time.Sleep(time.Second)
 	fmt.Println("The Product \"" + p.name + "\"  was saved")
 }

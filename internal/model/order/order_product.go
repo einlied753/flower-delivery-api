@@ -14,8 +14,8 @@ type OrderProduct struct {
 	productCount int
 }
 
-func NewOrderProduct(orderId int, productId int, productCount int) OrderProduct {
-	return OrderProduct{
+func NewOrderProduct(orderId int, productId int, productCount int) *OrderProduct {
+	return &OrderProduct{
 		id:           1,
 		orderId:      orderId,
 		productId:    productId,
@@ -39,7 +39,7 @@ func (op *OrderProduct) GetProductCount() int {
 	return op.productCount
 }
 
-func (op OrderProduct) SaveItem() {
+func (op *OrderProduct) SaveItem() {
 	time.Sleep(time.Second)
 	fmt.Println("The OrderProduct " + strconv.Itoa(op.id) + " was saved")
 }

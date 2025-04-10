@@ -15,8 +15,8 @@ type Cart struct {
 	created string
 }
 
-func NewCart(userId int, orderId int) Cart {
-	return Cart{
+func NewCart(userId int, orderId int) *Cart {
+	return &Cart{
 		id:      1,
 		userId:  userId,
 		orderId: orderId,
@@ -33,7 +33,7 @@ func (c *Cart) GetStatus() CartStatus {
 	return c.status
 }
 
-func (c Cart) SaveItem() {
+func (c *Cart) SaveItem() {
 	time.Sleep(time.Second)
 	fmt.Println("The Cart " + strconv.Itoa(c.id) + " was saved")
 }

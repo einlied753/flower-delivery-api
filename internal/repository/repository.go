@@ -25,23 +25,23 @@ type Item interface {
 func SetItems(items []Item) {
 	for _, item := range items {
 		switch v := item.(type) {
-		case user.User:
-			userSlice = append(userSlice, &v)
+		case *user.User:
+			userSlice = append(userSlice, v)
 			item.SaveItem()
-		case product.Product:
-			productSlice = append(productSlice, &v)
+		case *product.Product:
+			productSlice = append(productSlice, v)
 			item.SaveItem()
-		case cart.Cart:
-			cartSlice = append(cartSlice, &v)
+		case *cart.Cart:
+			cartSlice = append(cartSlice, v)
 			item.SaveItem()
-		case cart.CartProduct:
-			cartProductSlice = append(cartProductSlice, &v)
+		case *cart.CartProduct:
+			cartProductSlice = append(cartProductSlice, v)
 			item.SaveItem()
-		case order.Order:
-			orderSlice = append(orderSlice, &v)
+		case *order.Order:
+			orderSlice = append(orderSlice, v)
 			item.SaveItem()
-		case order.OrderProduct:
-			orderProductSlice = append(orderProductSlice, &v)
+		case *order.OrderProduct:
+			orderProductSlice = append(orderProductSlice, v)
 			item.SaveItem()
 		default:
 			fmt.Println("Error in repository.GetItems: undefined type of item")

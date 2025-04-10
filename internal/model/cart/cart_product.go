@@ -14,8 +14,8 @@ type CartProduct struct {
 	productCount int
 }
 
-func NewCartProduct(id int, cartId int, productId int, productCount int) CartProduct {
-	return CartProduct{
+func NewCartProduct(id int, cartId int, productId int, productCount int) *CartProduct {
+	return &CartProduct{
 		id:           id,
 		cartId:       cartId,
 		productId:    productId,
@@ -31,7 +31,7 @@ func (cp *CartProduct) GetProductCount() int {
 	return cp.productCount
 }
 
-func (cp CartProduct) SaveItem() {
+func (cp *CartProduct) SaveItem() {
 	time.Sleep(time.Second)
 	fmt.Println("The CartProduct " + strconv.Itoa(cp.id) + " was saved")
 }
