@@ -1,6 +1,11 @@
 package user
 
-//User who can be a customer of the store or a temporary user who makes an order
+import (
+	"fmt"
+	"time"
+)
+
+// User who can be a customer of the store or a temporary user who makes an order
 type User struct {
 	id       int
 	fio      string
@@ -10,8 +15,9 @@ type User struct {
 	isActive bool
 }
 
-func NewUser(fio string, email string, phone string, address string) User {
-	return User{
+func NewUser(fio string, email string, phone string, address string) *User {
+	return &User{
+		id:       1,
 		fio:      fio,
 		email:    email,
 		phone:    phone,
@@ -50,4 +56,13 @@ func (u *User) SetAddress(address string) {
 
 func (u *User) GetAddress() string {
 	return u.address
+}
+
+func (u *User) GetItem() *User {
+	return u
+}
+
+func (u *User) SaveItem() {
+	time.Sleep(time.Second)
+	fmt.Println("The User \"" + u.GetFio() + "\"  was saved")
 }
