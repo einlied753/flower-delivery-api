@@ -1,7 +1,6 @@
 package user
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -30,7 +29,7 @@ func (u *User) SetFio(fio string) {
 	u.fio = fio
 }
 
-func (u *User) GetFio() string {
+func (u User) GetFio() string {
 	return u.fio
 }
 
@@ -38,7 +37,7 @@ func (u *User) SetEmail(email string) {
 	u.email = email
 }
 
-func (u *User) GetEmail() string {
+func (u User) GetEmail() string {
 	return u.email
 }
 
@@ -46,7 +45,7 @@ func (u *User) SetPhone(phone string) {
 	u.phone = phone
 }
 
-func (u *User) GetPhone() string {
+func (u User) GetPhone() string {
 	return u.phone
 }
 
@@ -54,15 +53,15 @@ func (u *User) SetAddress(address string) {
 	u.address = address
 }
 
-func (u *User) GetAddress() string {
+func (u User) GetAddress() string {
 	return u.address
 }
 
-func (u *User) GetItem() *User {
+func (u User) GetItem() User {
 	return u
 }
 
 func (u *User) SaveItem() {
 	time.Sleep(time.Second)
-	fmt.Println("The User \"" + u.GetFio() + "\"  was saved")
+	//fmt.Println("The User \"" + u.GetFio() + "\"  was saved")
 }

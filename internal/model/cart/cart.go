@@ -1,8 +1,6 @@
 package cart
 
 import (
-	"fmt"
-	"strconv"
 	"time"
 )
 
@@ -25,15 +23,19 @@ func NewCart(userId int, orderId int) *Cart {
 	}
 }
 
+func (c Cart) GetId() int {
+	return c.id
+}
+
 func (c *Cart) SetStatus(cartStatus CartStatus) {
 	c.status = cartStatus
 }
 
-func (c *Cart) GetStatus() CartStatus {
+func (c Cart) GetStatus() CartStatus {
 	return c.status
 }
 
 func (c *Cart) SaveItem() {
 	time.Sleep(time.Second)
-	fmt.Println("The Cart " + strconv.Itoa(c.id) + " was saved")
+	//fmt.Println("The Cart " + strconv.Itoa(c.id) + " was saved")
 }
