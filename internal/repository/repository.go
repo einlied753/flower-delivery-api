@@ -72,7 +72,7 @@ func Logger() {
 	oldCartCount := 0
 	oldCartProductCount := 0
 	oldOrderCount := 0
-	oldOrderProduct := 0
+	oldOrderProductCount := 0
 
 	fmt.Println("Logger begin working....")
 
@@ -85,7 +85,7 @@ func Logger() {
 			len(cartSlice) != oldCartCount ||
 			len(cartProductSlice) != oldCartProductCount ||
 			len(orderSlice) != oldOrderCount ||
-			len(orderProductSlice) != oldOrderProduct {
+			len(orderProductSlice) != oldOrderProductCount {
 
 			fmt.Println("Log for:")
 			fmt.Println(item)
@@ -95,7 +95,7 @@ func Logger() {
 			oldCartCount = len(cartSlice)
 			oldCartProductCount = len(cartProductSlice)
 			oldOrderCount = len(orderSlice)
-			oldOrderProduct = len(orderProductSlice)
+			oldOrderProductCount = len(orderProductSlice)
 		}
 	}
 }
