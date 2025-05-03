@@ -1,7 +1,7 @@
 package product
 
 import (
-	"time"
+	"fmt"
 )
 
 // Product contained in a store, such as flowers, vases, toys
@@ -43,7 +43,6 @@ func (p Product) GetQuantity() int {
 	return p.quantity
 }
 
-func (p *Product) SaveItem() {
-	time.Sleep(time.Second)
-	//fmt.Println("The Product \"" + p.name + "\"  was saved")
+func (p *Product) SaveItemLog() {
+	fmt.Println("The Product \"" + p.name + "\"  was saved")
 }

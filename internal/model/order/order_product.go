@@ -1,7 +1,8 @@
 package order
 
 import (
-	"time"
+	"fmt"
+	"strconv"
 )
 
 // Link between orders and products, contains products added to order
@@ -41,7 +42,6 @@ func (op OrderProduct) GetProductCount() int {
 	return op.productCount
 }
 
-func (op *OrderProduct) SaveItem() {
-	time.Sleep(time.Second)
-	//fmt.Println("The OrderProduct " + strconv.Itoa(op.id) + " was saved")
+func (op *OrderProduct) SaveItemLog() {
+	fmt.Println("The OrderProduct " + strconv.Itoa(op.id) + " was saved")
 }

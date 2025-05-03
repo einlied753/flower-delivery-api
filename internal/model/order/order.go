@@ -1,6 +1,8 @@
 package order
 
 import (
+	"fmt"
+	"strconv"
 	"time"
 )
 
@@ -59,7 +61,6 @@ func (o Order) GetAddress() string {
 	return o.address
 }
 
-func (o *Order) SaveItem() {
-	time.Sleep(time.Second)
-	//fmt.Println("The Order " + strconv.Itoa(o.id) + " was saved")
+func (o *Order) SaveItemLog() {
+	fmt.Println("The Order " + strconv.Itoa(o.id) + " was saved")
 }
