@@ -15,7 +15,6 @@ import (
 func ItemSavingLogging() {
 
 	wg := sync.WaitGroup{}
-	mu := sync.Mutex{}
 
 	oldUsersCount := 0
 	oldProductCount := 0
@@ -41,9 +40,7 @@ func ItemSavingLogging() {
 	fmt.Println("Logger started working...")
 
 	for {
-		mu.Lock()
 		newUsers := repository.GetUsers()
-		mu.Unlock()
 
 		if len(newUsers) != oldUsersCount {
 
@@ -66,9 +63,7 @@ func ItemSavingLogging() {
 			oldUsersCount = len(newUsers)
 		}
 
-		mu.Lock()
 		newProducts := repository.GetProducts()
-		mu.Unlock()
 
 		if len(newProducts) != oldProductCount {
 
@@ -91,9 +86,7 @@ func ItemSavingLogging() {
 			oldProductCount = len(newProducts)
 		}
 
-		mu.Lock()
 		newCarts := repository.GetCarts()
-		mu.Unlock()
 
 		if len(newCarts) != oldCartCount {
 
@@ -116,9 +109,7 @@ func ItemSavingLogging() {
 			oldCartCount = len(newCarts)
 		}
 
-		mu.Lock()
 		newCartProducts := repository.GetCartProducts()
-		mu.Unlock()
 
 		if len(newCartProducts) != oldCartProductCount {
 
@@ -141,9 +132,7 @@ func ItemSavingLogging() {
 			oldCartProductCount = len(newCartProducts)
 		}
 
-		mu.Lock()
 		newOrders := repository.GetOrders()
-		mu.Unlock()
 
 		if len(newOrders) != oldOrderCount {
 
@@ -166,9 +155,7 @@ func ItemSavingLogging() {
 			oldOrderCount = len(newOrders)
 		}
 
-		mu.Lock()
 		newOrderProducts := repository.GetOrderProducts()
-		mu.Unlock()
 
 		if len(newOrderProducts) != oldOrderProductCount {
 
