@@ -21,6 +21,6 @@ var statusDescription = map[OrderStatus]string{
 	Delivered:  "order delivered",
 }
 
-func (os OrderStatus) String() string {
+func (os OrderStatus) GetDescription() string {
 	return statusDescription[os]
 }

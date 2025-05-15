@@ -2,7 +2,6 @@ package product
 
 import (
 	"fmt"
-	"time"
 )
 
 // Product contained in a store, such as flowers, vases, toys
@@ -24,11 +23,15 @@ func NewProduct(id int, name string, price float32, quantity int, discount float
 	}
 }
 
+func (p Product) GetName() string {
+	return p.name
+}
+
 func (p *Product) SetPrice(price float32) {
 	p.price = price
 }
 
-func (p *Product) GetPrice() float32 {
+func (p Product) GetPrice() float32 {
 	return p.price
 }
 
@@ -36,11 +39,10 @@ func (p *Product) SetQuantity(quantity int) {
 	p.quantity = quantity
 }
 
-func (p *Product) GetQuantity() int {
+func (p Product) GetQuantity() int {
 	return p.quantity
 }
 
-func (p *Product) SaveItem() {
-	time.Sleep(time.Second)
+func (p *Product) SaveItemLog() {
 	fmt.Println("The Product \"" + p.name + "\"  was saved")
 }

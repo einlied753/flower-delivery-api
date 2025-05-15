@@ -33,11 +33,15 @@ func NewOrder(userId int, cost float32, productCount int, email string, address 
 	}
 }
 
+func (o Order) GetId() int {
+	return o.id
+}
+
 func (o *Order) SetStatus(orderStatus OrderStatus) {
 	o.status = orderStatus
 }
 
-func (o *Order) GetStatus() OrderStatus {
+func (o Order) GetStatus() OrderStatus {
 	return o.status
 }
 
@@ -45,7 +49,7 @@ func (o *Order) SetEmail(email string) {
 	o.email = email
 }
 
-func (o *Order) GetEmail() string {
+func (o Order) GetEmail() string {
 	return o.email
 }
 
@@ -53,11 +57,10 @@ func (o *Order) SetAddress(address string) {
 	o.address = address
 }
 
-func (o *Order) GetAddress() string {
+func (o Order) GetAddress() string {
 	return o.address
 }
 
-func (o *Order) SaveItem() {
-	time.Sleep(time.Second)
+func (o *Order) SaveItemLog() {
 	fmt.Println("The Order " + strconv.Itoa(o.id) + " was saved")
 }

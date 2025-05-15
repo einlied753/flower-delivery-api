@@ -3,7 +3,6 @@ package cart
 import (
 	"fmt"
 	"strconv"
-	"time"
 )
 
 // Link between cart and products, showing what products are in the cart
@@ -23,15 +22,18 @@ func NewCartProduct(id int, cartId int, productId int, productCount int) *CartPr
 	}
 }
 
+func (cp CartProduct) GetId() int {
+	return cp.id
+}
+
 func (cp *CartProduct) SetProductCount(productCount int) {
 	cp.productCount = productCount
 }
 
-func (cp *CartProduct) GetProductCount() int {
+func (cp CartProduct) GetProductCount() int {
 	return cp.productCount
 }
 
-func (cp *CartProduct) SaveItem() {
-	time.Sleep(time.Second)
+func (cp *CartProduct) SaveItemLog() {
 	fmt.Println("The CartProduct " + strconv.Itoa(cp.id) + " was saved")
 }
