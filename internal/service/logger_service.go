@@ -35,12 +35,15 @@ func ItemSavingLogging(ctx context.Context) {
 	orderChan := make(chan *order.Order)
 	orderProductChan := make(chan *order.OrderProduct)
 
+	timer := time.NewTicker(200 * time.Millisecond)
+	defer timer.Stop()
+
 	for {
 		select {
 		case <-ctx.Done():
 			fmt.Println("Context done in ItemSavingLogging()")
 			return
-		default:
+		case <-timer.C:
 
 			newUsers := repository.GetUsers()
 
@@ -163,8 +166,6 @@ func ItemSavingLogging(ctx context.Context) {
 				}()
 				oldOrderProductCount = len(newOrderProducts)
 			}
-
-			time.Sleep(200 * time.Millisecond)
 		}
 	}
 }
