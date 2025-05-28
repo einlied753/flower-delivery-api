@@ -6,15 +6,13 @@ import (
 	"api/internal/model/product"
 	"api/internal/model/user"
 	"api/internal/repository"
+	"context"
 	"fmt"
 	"slices"
-	"sync"
 	"time"
 )
 
-func ItemSavingLogging() {
-
-	wg := sync.WaitGroup{}
+func ItemSavingLogging(ctx context.Context) {
 
 	oldUsersCount := 0
 	oldProductCount := 0
@@ -37,147 +35,137 @@ func ItemSavingLogging() {
 	orderChan := make(chan *order.Order)
 	orderProductChan := make(chan *order.OrderProduct)
 
-	fmt.Println("Logger started working...")
+	timer := time.NewTicker(200 * time.Millisecond)
+	defer timer.Stop()
 
 	for {
-		newUsers := repository.GetUsers()
+		select {
+		case <-ctx.Done():
+			fmt.Println("Context done in ItemSavingLogging()")
+			return
+		case <-timer.C:
 
-		if len(newUsers) != oldUsersCount {
+			newUsers := repository.GetUsers()
 
-			wg.Add(2)
-			go func() {
-				for user := range userChan {
-					user.SaveItemLog()
-				}
-				wg.Done()
-			}()
-			go func() {
-				for _, u := range newUsers {
-					if !slices.Contains(addedUsers, u) {
-						userChan <- u
-						addedUsers = append(addedUsers, u)
+			if len(newUsers) != oldUsersCount {
+
+				go func() {
+					for user := range userChan {
+						user.SaveItemLog()
 					}
-				}
-				wg.Done()
-			}()
-			oldUsersCount = len(newUsers)
-		}
 
-		newProducts := repository.GetProducts()
-
-		if len(newProducts) != oldProductCount {
-
-			wg.Add(2)
-			go func() {
-				for product := range productChan {
-					product.SaveItemLog()
-				}
-				wg.Done()
-			}()
-			go func() {
-				for _, p := range newProducts {
-					if !slices.Contains(addedProducts, p) {
-						productChan <- p
-						addedProducts = append(addedProducts, p)
+				}()
+				go func() {
+					for _, u := range newUsers {
+						if !slices.Contains(addedUsers, u) {
+							userChan <- u
+							addedUsers = append(addedUsers, u)
+						}
 					}
-				}
-				wg.Done()
-			}()
-			oldProductCount = len(newProducts)
-		}
 
-		newCarts := repository.GetCarts()
+				}()
+				oldUsersCount = len(newUsers)
+			}
 
-		if len(newCarts) != oldCartCount {
+			newProducts := repository.GetProducts()
 
-			wg.Add(2)
-			go func() {
-				for cart := range cartChan {
-					cart.SaveItemLog()
-				}
-				wg.Done()
-			}()
-			go func() {
-				for _, c := range newCarts {
-					if !slices.Contains(addedCarts, c) {
-						cartChan <- c
-						addedCarts = append(addedCarts, c)
+			if len(newProducts) != oldProductCount {
+
+				go func() {
+					for product := range productChan {
+						product.SaveItemLog()
 					}
-				}
-				wg.Done()
-			}()
-			oldCartCount = len(newCarts)
-		}
-
-		newCartProducts := repository.GetCartProducts()
-
-		if len(newCartProducts) != oldCartProductCount {
-
-			wg.Add(2)
-			go func() {
-				for cartProduct := range cartProductChan {
-					cartProduct.SaveItemLog()
-				}
-				wg.Done()
-			}()
-			go func() {
-				for _, cp := range newCartProducts {
-					if !slices.Contains(addedCartProducts, cp) {
-						cartProductChan <- cp
-						addedCartProducts = append(addedCartProducts, cp)
+				}()
+				go func() {
+					for _, p := range newProducts {
+						if !slices.Contains(addedProducts, p) {
+							productChan <- p
+							addedProducts = append(addedProducts, p)
+						}
 					}
-				}
-				wg.Done()
-			}()
-			oldCartProductCount = len(newCartProducts)
-		}
+				}()
+				oldProductCount = len(newProducts)
+			}
 
-		newOrders := repository.GetOrders()
+			newCarts := repository.GetCarts()
 
-		if len(newOrders) != oldOrderCount {
+			if len(newCarts) != oldCartCount {
 
-			wg.Add(2)
-			go func() {
-				for order := range orderChan {
-					order.SaveItemLog()
-				}
-				wg.Done()
-			}()
-			go func() {
-				for _, o := range newOrders {
-					if !slices.Contains(addedOrders, o) {
-						orderChan <- o
-						addedOrders = append(addedOrders, o)
+				go func() {
+					for cart := range cartChan {
+						cart.SaveItemLog()
 					}
-				}
-				wg.Done()
-			}()
-			oldOrderCount = len(newOrders)
-		}
-
-		newOrderProducts := repository.GetOrderProducts()
-
-		if len(newOrderProducts) != oldOrderProductCount {
-
-			wg.Add(2)
-			go func() {
-				for orderProduct := range orderProductChan {
-					orderProduct.SaveItemLog()
-				}
-				wg.Done()
-			}()
-			go func() {
-				for _, op := range newOrderProducts {
-					if !slices.Contains(addedOrderProducts, op) {
-						orderProductChan <- op
-						addedOrderProducts = append(addedOrderProducts, op)
+				}()
+				go func() {
+					for _, c := range newCarts {
+						if !slices.Contains(addedCarts, c) {
+							cartChan <- c
+							addedCarts = append(addedCarts, c)
+						}
 					}
-				}
-				wg.Done()
-			}()
-			oldOrderProductCount = len(newOrderProducts)
-		}
+				}()
+				oldCartCount = len(newCarts)
+			}
 
-		time.Sleep(200 * time.Millisecond)
+			newCartProducts := repository.GetCartProducts()
+
+			if len(newCartProducts) != oldCartProductCount {
+
+				go func() {
+					for cartProduct := range cartProductChan {
+						cartProduct.SaveItemLog()
+					}
+				}()
+				go func() {
+					for _, cp := range newCartProducts {
+						if !slices.Contains(addedCartProducts, cp) {
+							cartProductChan <- cp
+							addedCartProducts = append(addedCartProducts, cp)
+						}
+					}
+				}()
+				oldCartProductCount = len(newCartProducts)
+			}
+
+			newOrders := repository.GetOrders()
+
+			if len(newOrders) != oldOrderCount {
+
+				go func() {
+					for order := range orderChan {
+						order.SaveItemLog()
+					}
+				}()
+				go func() {
+					for _, o := range newOrders {
+						if !slices.Contains(addedOrders, o) {
+							orderChan <- o
+							addedOrders = append(addedOrders, o)
+						}
+					}
+				}()
+				oldOrderCount = len(newOrders)
+			}
+
+			newOrderProducts := repository.GetOrderProducts()
+
+			if len(newOrderProducts) != oldOrderProductCount {
+
+				go func() {
+					for orderProduct := range orderProductChan {
+						orderProduct.SaveItemLog()
+					}
+				}()
+				go func() {
+					for _, op := range newOrderProducts {
+						if !slices.Contains(addedOrderProducts, op) {
+							orderProductChan <- op
+							addedOrderProducts = append(addedOrderProducts, op)
+						}
+					}
+				}()
+				oldOrderProductCount = len(newOrderProducts)
+			}
+		}
 	}
 }
