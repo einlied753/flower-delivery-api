@@ -8,3 +8,16 @@ const (
 	InProgress
 	Done
 )
+
+func (cs CartStatus) GetStringName() string {
+	switch cs {
+	case Empty:
+		return "Empty"
+	case InProgress:
+		return "InProgress"
+	case Done:
+		return "Done"
+	default:
+		return "Unknown status type"
+	}
+}

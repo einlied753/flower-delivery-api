@@ -5,24 +5,10 @@ import (
 	"api/internal/model/order"
 	"api/internal/model/product"
 	"api/internal/model/user"
+	"encoding/csv"
 	"fmt"
-	"sync"
-)
-
-var (
-	userSlice         []*user.User
-	productSlice      []*product.Product
-	orderSlice        []*order.Order
-	orderProductSlice []*order.OrderProduct
-	cartSlice         []*cart.Cart
-	cartProductSlice  []*cart.CartProduct
-
-	userMutex         sync.RWMutex
-	productMutex      sync.RWMutex
-	orderMutex        sync.RWMutex
-	orderProductMutex sync.RWMutex
-	cartMutex         sync.RWMutex
-	cartProductMutex  sync.RWMutex
+	"log"
+	"os"
 )
 
 type Item interface {
@@ -30,69 +16,54 @@ type Item interface {
 }
 
 func AddItem(item Item) {
-
 	switch v := item.(type) {
 	case *user.User:
-		userMutex.Lock()
-		defer userMutex.Unlock()
-		userSlice = append(userSlice, v)
+		SaveUser(v)
 	case *product.Product:
-		productMutex.Lock()
-		defer productMutex.Unlock()
-		productSlice = append(productSlice, v)
+		SaveProduct(v)
 	case *cart.Cart:
-		cartMutex.Lock()
-		defer cartMutex.Unlock()
-		cartSlice = append(cartSlice, v)
+		SaveCart(v)
 	case *cart.CartProduct:
-		cartProductMutex.Lock()
-		defer cartProductMutex.Unlock()
-		cartProductSlice = append(cartProductSlice, v)
+		SaveCartProduct(v)
 	case *order.Order:
-		orderMutex.Lock()
-		defer orderMutex.Unlock()
-		orderSlice = append(orderSlice, v)
+		SaveOrder(v)
 	case *order.OrderProduct:
-		orderProductMutex.Lock()
-		defer orderProductMutex.Unlock()
-		orderProductSlice = append(orderProductSlice, v)
+		SaveOrderProduct(v)
 	default:
-		fmt.Println("Error in repository.SetItems: undefined type of item")
+		fmt.Println("Error in AddItem: undefined type of item")
 	}
 }
 
-func GetUsers() []*user.User {
-	userMutex.RLock()
-	defer userMutex.RUnlock()
-	return userSlice
+func writeFile(fileName string, strItem []string) {
+
+	file, err := os.OpenFile(fileName, os.O_CREATE|os.O_WRONLY, 0644)
+	if err != nil {
+		log.Fatalf("Unable to open file %s, err: %v", fileName, err)
+	}
+	defer file.Close()
+
+	writer := csv.NewWriter(file)
+	defer writer.Flush()
+
+	if err := writer.Write(strItem); err != nil {
+		log.Fatalf("Cannot write row: %v", err)
+	}
 }
 
-func GetProducts() []*product.Product {
-	productMutex.RLock()
-	defer productMutex.RUnlock()
-	return productSlice
-}
+func readFile(filePath string) ([][]string, error) {
 
-func GetCarts() []*cart.Cart {
-	cartMutex.RLock()
-	defer cartMutex.RUnlock()
-	return cartSlice
-}
+	file, err := os.Open(filePath)
+	if err != nil {
+		return nil, fmt.Errorf("couldn't open file %s, error: %w", filePath, err)
+	}
+	defer file.Close()
 
-func GetCartProducts() []*cart.CartProduct {
-	cartMutex.RLock()
-	defer cartMutex.RUnlock()
-	return cartProductSlice
-}
+	csvReader := csv.NewReader(file)
 
-func GetOrders() []*order.Order {
-	orderMutex.RLock()
-	defer orderMutex.RUnlock()
-	return orderSlice
-}
+	lines, err := csvReader.ReadAll()
+	if err != nil {
+		return nil, fmt.Errorf("csvReader error: %w", err)
+	}
 
-func GetOrderProducts() []*order.OrderProduct {
-	orderProductMutex.RLock()
-	defer orderProductMutex.RUnlock()
-	return orderProductSlice
+	return lines, nil
 }
