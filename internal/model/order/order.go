@@ -37,12 +37,28 @@ func (o Order) GetId() int {
 	return o.id
 }
 
+func (o Order) GetUserId() int {
+	return o.userId
+}
+
 func (o *Order) SetStatus(orderStatus OrderStatus) {
 	o.status = orderStatus
 }
 
 func (o Order) GetStatus() OrderStatus {
 	return o.status
+}
+
+func (o Order) GetCost() float32 {
+	return o.cost
+}
+
+func (o Order) GetProductCount() int {
+	return o.productCount
+}
+
+func (o Order) GetCreated() string {
+	return o.created
 }
 
 func (o *Order) SetEmail(email string) {
@@ -61,6 +77,14 @@ func (o Order) GetAddress() string {
 	return o.address
 }
 
+func (o Order) GetPhone() string {
+	return o.phone
+}
+
 func (o *Order) SaveItemLog() {
 	fmt.Println("The Order " + strconv.Itoa(o.id) + " was saved")
+}
+
+func (o Order) GetStringOrderStatus() string {
+	return o.status.GetStringName()
 }

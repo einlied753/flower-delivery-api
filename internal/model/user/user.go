@@ -25,6 +25,10 @@ func NewUser(id int, fio string, email string, phone string, address string) *Us
 	}
 }
 
+func (u User) GetId() int {
+	return u.id
+}
+
 func (u *User) SetFio(fio string) {
 	u.fio = fio
 }
@@ -55,6 +59,10 @@ func (u *User) SetAddress(address string) {
 
 func (u User) GetAddress() string {
 	return u.address
+}
+
+func (u User) GetIsActive() bool {
+	return u.isActive
 }
 
 func (u User) GetItem() User {

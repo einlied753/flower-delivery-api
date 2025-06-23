@@ -26,6 +26,14 @@ func (cp CartProduct) GetId() int {
 	return cp.id
 }
 
+func (cp CartProduct) GetCartId() int {
+	return cp.cartId
+}
+
+func (cp CartProduct) GetProductId() int {
+	return cp.productId
+}
+
 func (cp *CartProduct) SetProductCount(productCount int) {
 	cp.productCount = productCount
 }

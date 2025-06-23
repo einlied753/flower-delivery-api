@@ -13,9 +13,9 @@ type OrderProduct struct {
 	productCount int
 }
 
-func NewOrderProduct(orderId int, productId int, productCount int) *OrderProduct {
+func NewOrderProduct(id int, orderId int, productId int, productCount int) *OrderProduct {
 	return &OrderProduct{
-		id:           1,
+		id:           id,
 		orderId:      orderId,
 		productId:    productId,
 		productCount: productCount,

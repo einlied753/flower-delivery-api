@@ -23,6 +23,10 @@ func NewProduct(id int, name string, price float32, quantity int, discount float
 	}
 }
 
+func (p Product) GetId() int {
+	return p.id
+}
+
 func (p Product) GetName() string {
 	return p.name
 }
@@ -41,6 +45,14 @@ func (p *Product) SetQuantity(quantity int) {
 
 func (p Product) GetQuantity() int {
 	return p.quantity
+}
+
+func (p *Product) SetDiscount(discount float32) {
+	p.discount = discount
+}
+
+func (p Product) GetDiscount() float32 {
+	return p.discount
 }
 
 func (p *Product) SaveItemLog() {

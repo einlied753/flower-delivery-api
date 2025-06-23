@@ -24,3 +24,22 @@ var statusDescription = map[OrderStatus]string{
 func (os OrderStatus) GetDescription() string {
 	return statusDescription[os]
 }
+
+func (os OrderStatus) GetStringName() string {
+	switch os {
+	case New:
+		return "New"
+	case Booked:
+		return "Booked"
+	case Paid:
+		return "Paid"
+	case Collecting:
+		return "Collecting"
+	case Sent:
+		return "Sent"
+	case Delivered:
+		return "Delivered"
+	default:
+		return "Unknown status type"
+	}
+}
